@@ -12,20 +12,20 @@ typedef struct {
     NoArvore* raiz;
 } Arvore;
 
-Arvore* criarArvore();
+Arvore* criarArvore(); // feito
 
-void inserirLivroArvore(Arvore* arvore, Livro* livro);
+void inserirLivroArvore(Arvore* arvore, Livro* livro); // feito
 
-Livro* buscarLivroArvore(Arvore* arvore, int codigo);
+Livro* buscarLivroArvore(Arvore* arvore, int codigo); // feito
 
-void listarLivrosEmOrdem(Arvore* arvore);
+void listarLivrosEmOrdem(Arvore* arvore); // feito
 
-void listarLivrosEmPreOrdem(Arvore* arvore);
+void listarLivrosEmPreOrdem(Arvore* arvore); // feito
 
-void listarLivrosEmPosOrdem(Arvore* arvore);
+void listarLivrosEmPosOrdem(Arvore* arvore); // feito
 
-int contarLivros(Arvore* arvore);
+int contarLivros(Arvore* arvore); // feito
 
-int calcularAlturaArvore(Arvore* arvore);
+int calcularAlturaArvore(Arvore* arvore); // feito
 
 #endif //TRABALHO_BIBLIOTECA_ARVORE_H
