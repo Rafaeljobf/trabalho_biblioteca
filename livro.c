@@ -9,5 +9,5 @@ void exibirLivro(Livro* livro) {
            livro->autor,
            livro->ano,
            livro->quantidadeTotal,
-           livro->quantidadeDisponível);
+           livro->quantidadeDisponivel);
 }

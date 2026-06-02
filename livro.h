@@ -7,7 +7,7 @@ typedef struct {
     char autor[100];
     int ano;
     int quantidadeTotal;
-    int quantidadeDisponível;
+    int quantidadeDisponivel;
 } Livro;
 
 Livro* criarLivro (int codigo, char titulo [], char autor [], int ano, int quantidadeTotal);

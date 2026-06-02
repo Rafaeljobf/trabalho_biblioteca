@@ -6,6 +6,7 @@ typedef struct NoArvore {
     Livro* livro;
     struct NoArvore* esquerda;
     struct NoArvore* direita;
+    int altura;
 } NoArvore;
 
 typedef struct {
@@ -27,5 +28,7 @@ void listarLivrosEmPosOrdem(Arvore* arvore); // feito
 int contarLivros(Arvore* arvore); // feito
 
 int calcularAlturaArvore(Arvore* arvore); // feito
+
+void removerLivroArvore(Arvore* arvore, int codigo); // feito
 
 #endif //TRABALHO_BIBLIOTECA_ARVORE_H
