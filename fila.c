@@ -1,12 +1,12 @@
 #include "fila.h"
-
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 Fila* criarFila() {
-    Fila* fila;
+    Fila* fila = malloc(sizeof(fila));
+    if (fila == NULL) return NULL;
     fila->inicio = NULL;
     fila->fim = NULL;
     return fila;
