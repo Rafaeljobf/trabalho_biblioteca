@@ -5,7 +5,7 @@
 #include <string.h>
 
 Fila* criarFila() {
-    Fila* fila = malloc(sizeof(fila));
+    Fila* fila = malloc(sizeof(Fila));
     if (fila == NULL) return NULL;
     fila->inicio = NULL;
     fila->fim = NULL;
@@ -33,7 +33,7 @@ void enfileirarReserva(Fila* fila, Reserva reserva) {
     if (fila == NULL) return;
 
     NoFila* novoNo = criarNoFila();
-    if (novoNo == NULL){ return; }
+    if (novoNo == NULL) return; 
 
     // Copia os dados da reserva de forma segura
     novoNo->reserva.codigoLivro = reserva.codigoLivro;
