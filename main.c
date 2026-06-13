@@ -26,9 +26,9 @@ void exibirMenu() {
 int main() {
     int opcao;
 
-    Fila reservas;
-    Arvore colecao;
-    Lista historico;
+    Fila* reservas = criarFila();
+    Arvore* colecao = criarArvore();
+    Lista* historico = criarLista();
 
     do {
         exibirMenu();
