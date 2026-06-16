@@ -114,7 +114,7 @@ static NoArvore* inserirNo(NoArvore* no, Livro* livro) {
         no->direita = inserirNo(no->direita, livro);
     } else {
         printf("Erro: Livro com código %d já existe.\n", livro->codigo);
-        return no;
+        return NULL;
     }
 
     no->altura = maxInt(alturaNo(no->esquerda), alturaNo(no->direita)) + 1;
@@ -194,13 +194,20 @@ Arvore* criarArvore() {
     return novaArvore;
 }
 
-void inserirLivroArvore(Arvore* arvore, Livro* livro) {
+int inserirLivroArvore(Arvore* arvore, Livro* livro) {
     if (arvore == NULL || livro == NULL) {
         printf("ERRO: Dados inválidos!");
-        return;
+        return 0; // dados inválidos
     }
 
-    arvore->raiz = inserirNo(arvore->raiz, livro);
+    NoArvore* novaRaiz = inserirNo(arvore->raiz, livro);
+
+    if (novaRaiz == NULL && arvore->raiz != NULL) {
+        return 0; // duplicata
+    }
+
+    arvore->raiz = novaRaiz;    
+    return 1;
 }
 
 Livro* buscarLivroArvore(Arvore* arvore, int codigo) {

@@ -15,7 +15,7 @@ typedef struct {
 
 Arvore* criarArvore(); // feito
 
-void inserirLivroArvore(Arvore* arvore, Livro* livro); // feito
+int inserirLivroArvore(Arvore* arvore, Livro* livro); // feito
 
 Livro* buscarLivroArvore(Arvore* arvore, int codigo); // feito
 
