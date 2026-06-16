@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 #include "livro.h"
 #include "arvore.h"
 #include "fila.h"
@@ -36,7 +38,8 @@ int main() {
 
         switch (opcao)
         {
-        case 1: // cadastro de novo livro
+        case 1: {
+            // cadastro de novo livro
             int codigo, ano, quantidade;
             char titulo[100], autor[100];
 
@@ -64,10 +67,12 @@ int main() {
             }
             
             break;
-        case 2: // busca de livro por código
+        }
+        case 2: {
+            // busca de livro por código
             int codigoBusca;
 
-            printf("\nInsira o código do livro para busca:");
+            printf("\nInsira o codigo do livro para busca:");
             printf("\nCodigo: ");
             scanf("%d", &codigoBusca);
             getchar(); // consome o '\n' deixado pelo scanf
@@ -81,31 +86,39 @@ int main() {
             }
             
             break;
-        case 3: // listagem dos livros em ordem crescente
-                if (contarLivros(colecao) == 0) {
-                    printf("\nNenhum livro cadastrado.\n");
-                } else {
-                    listarLivrosEmOrdem(colecao);
-                }
+        }
+        case 3: {
+            // listagem dos livros em ordem crescente
+            if (contarLivros(colecao) == 0) {
+                printf("\nNenhum livro cadastrado.\n");
+            } else {
+                listarLivrosEmOrdem(colecao);
+            }
             
             break;
-        case 4: // listagem dos livros em pre-ordem
-                if (contarLivros(colecao) == 0) {
-                    printf("\nNenhum livro cadastrado.\n");
-                } else {
-                    listarLivrosEmPreOrdem(colecao);
-                }
+        }
+        case 4: {
+            // listagem dos livros em pre-ordem
+            if (contarLivros(colecao) == 0) {
+                printf("\nNenhum livro cadastrado.\n");
+            } else {
+                listarLivrosEmPreOrdem(colecao);
+            }
 
             break;
-        case 5: // listagem dos livros em pos-ordem
-                if (contarLivros(colecao) == 0) {
-                    printf("\nNenhum livro cadastrado.\n");
-                } else {
-                    listarLivrosEmPosOrdem(colecao);
-                }   
+        }
+        case 5: {
+            // listagem dos livros em pos-ordem
+            if (contarLivros(colecao) == 0) {
+                printf("\nNenhum livro cadastrado.\n");
+            } else {
+                listarLivrosEmPosOrdem(colecao);
+            }
 
             break;
-        case 6: // realizar empréstimo
+        }
+        case 6: {
+            // realizar empréstimo
             char nomeUsuario[100];
             int codigoEmprestimo;
 
@@ -123,7 +136,7 @@ int main() {
                 printf("\nLivro nao encontrado.\n");
 
             } else if (obterQuantidadeDisponivel(livroEmprestimo) > 0) {
-            // livro disponível: empresta e registra no histórico
+                // livro disponível: empresta e registra no histórico
                 emprestarExemplar(livroEmprestimo);
                 
                 Emprestimo emp;
@@ -153,7 +166,9 @@ int main() {
             }
 
             break;
-        case 7: // devolver empréstimo
+        }
+        case 7: {
+            // devolver empréstimo
             int codigoDevolver;
 
             printf("\nInsira o codigo do livro para devolucao");
@@ -197,6 +212,7 @@ int main() {
             }
         
             break;
+        }
         case 8: // consultar fila de reservas
 
             break;
