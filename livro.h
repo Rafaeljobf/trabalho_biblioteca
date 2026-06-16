@@ -22,4 +22,6 @@ void emprestarExemplar(Livro* livro);
 
 void devolverExemplar(Livro* livro);
 
+void liberarLivro(Livro* livro);
+
 #endif //TRABALHO_BIBLIOTECA_LIVRO_H
