@@ -36,8 +36,8 @@ int main() {
         exibirMenu();
         scanf("%d", &opcao);
 
-        switch (opcao)
-        {
+        switch (opcao) {
+        
         case 1: {
             // cadastro de novo livro
             int codigo, ano, quantidade;
@@ -192,44 +192,82 @@ int main() {
                 if (atual->reserva.codigoLivro == codigoDevolver) {
                     printf("\nHa usuarios aguardando esse livro na fila de reservas.");
                     printf("\nAtendendo o primeiro da fila: %s\n", atual->reserva.nomeUsuario);
-                
-                    // remove da fila e registra o empréstimo automático
-                    Reserva atendida = desenfileirarReserva(reservas);
-                    emprestarExemplar(livroDevolver);
-                
+
                     Emprestimo emp;
                     emp.codigoLivro = codigoDevolver;
-                    strncpy(emp.nomeUsuario, atendida.nomeUsuario, 99);
+                    strncpy(emp.nomeUsuario, atual->reserva.nomeUsuario, 99);
                     emp.nomeUsuario[99] = '\0';
                     strncpy(emp.tituloLivro, livroDevolver->titulo, 99);
                     emp.tituloLivro[99] = '\0';
-                
+
+                    desenfileirarReserva(reservas);
+                    emprestarExemplar(livroDevolver);
                     inserirEmprestimo(historico, emp);
-                    printf("Emprestimo automatico realizado para %s!\n", atendida.nomeUsuario);
+                    printf("Emprestimo automatico realizado para %s!\n", emp.nomeUsuario);
                     break;
-                }
+                }            
                 atual = atual->prox;
             }
+        break;
+        }
+        case 8: {
+            // exibir fila de reservas
+            exibirReservas(reservas);
+
+            break;
+        }
+        case 9: {
+            // exibir historico de emprestimos          
+            listarEmprestimos(historico);  
         
             break;
         }
-        case 8: // consultar fila de reservas
+        case 10: {
+            // exibir total de livros
+            int totalDeLivros = contarLivros(colecao);
+
+            printf("\nTotal de livros na colecao: %d\n", totalDeLivros);
 
             break;
-        case 9:
+        }
+        case 11: {
+            // mostrar altura da arvore
+            int alturaArvore = calcularAlturaArvore(colecao);
+            
+            printf("\nAltura da arvore: %d\n", alturaArvore);
             
             break;
-        case 10:
-
+        }
+        case 0: {
+            // libera a fila de reservas
+            while (!filaVazia(reservas)) {
+                desenfileirarReserva(reservas);
+            }
+            free(reservas);
+        
+            // libera o histórico
+            NoLista* noLista = historico->inicio;
+            while (noLista != NULL) {
+                NoLista* temp = noLista;
+                noLista = noLista->prox;
+                free(temp);
+            }
+            free(historico);
+        
+            // libera a árvore — a remoção já cuida dos nós e livros internamente
+            while (colecao->raiz != NULL) {
+                removerLivroArvore(colecao, colecao->raiz->livro->codigo);
+            }
+            free(colecao);
+        
+            printf("\nSaindo do sistema.\n");
             break;
-        case 11:
-            
+        }
+        default: {
+            printf("\nOpcao invalida. Tente novamente.\n");
             break;
-        case 0:
-            printf("Saindo do sistema.\n");
-            break;
-        default:
-            break;
+        }
+        
         }
 
     } while (opcao != 0);
