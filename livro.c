@@ -30,7 +30,7 @@ void exibirLivro(Livro* livro) {
         printf("Erro: Ponteiro de livro nulo.\n");
         return;
     }
-    printf("========================================\n");
+    printf("\n========================================\n");
     printf("Código: %d\n", livro->codigo);
     printf("Título: %s\n", livro->titulo);
     printf("Autor:  %s\n", livro->autor);

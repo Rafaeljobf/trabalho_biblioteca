@@ -39,7 +39,8 @@ int main() {
         case 1:
             int codigo, ano, quantidade;
             char titulo[100], autor[100];
-            printf("Insira os dados do livro para cadastro:");
+
+            printf("\nInsira os dados do livro para cadastro:");
             printf("\nCodigo: ");
             scanf("%d", &codigo);
             getchar(); // consome o '\n' deixado pelo scanf
@@ -53,19 +54,32 @@ int main() {
             printf("\nQuantidade Total de Exemplares: ");
             scanf("%d", &quantidade);
             getchar();
-            printf("\n\n");
 
             Livro *livro = criarLivro(codigo, titulo, autor, ano, quantidade);
 
-            if(!inserirLivroArvore(colecao, livro)) {
+            if (!inserirLivroArvore(colecao, livro)) {
                 liberarLivro(livro);
             } else {
-                printf("Livro cadastrado com sucesso.");
+                printf("\nLivro cadastrado com sucesso.\n");
             }
             
             break;
         case 2:
+            int codigoBusca;
 
+            printf("Insira o código do livro para busca:\n");
+            printf("Codigo: ");
+            scanf("%d", &codigoBusca);
+            getchar(); // consome o '\n' deixado pelo scanf
+            
+            Livro *procurado = buscarLivroArvore(colecao, codigoBusca);
+
+            if (procurado == NULL) {
+                printf("\nLivro nao encontrado\n");
+            } else {
+                exibirLivro(procurado);
+            }
+            
             break;
         case 3:
             

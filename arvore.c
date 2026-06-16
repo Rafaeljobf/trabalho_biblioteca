@@ -206,7 +206,7 @@ int inserirLivroArvore(Arvore* arvore, Livro* livro) {
         return 0; // duplicata
     }
 
-    arvore->raiz = novaRaiz;
+    arvore->raiz = novaRaiz;    
     return 1;
 }
 
