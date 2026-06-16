@@ -31,11 +31,11 @@ void exibirLivro(Livro* livro) {
         return;
     }
     printf("\n========================================\n");
-    printf("Código: %d\n", livro->codigo);
-    printf("Título: %s\n", livro->titulo);
+    printf("Codigo: %d\n", livro->codigo);
+    printf("Titulo: %s\n", livro->titulo);
     printf("Autor:  %s\n", livro->autor);
     printf("Ano:    %d\n", livro->ano);
-    printf("Total:  %d | Disponível: %d\n", livro->quantidadeTotal, livro->quantidadeDisponivel);
+    printf("Total:  %d | Disponivel: %d\n", livro->quantidadeTotal, livro->quantidadeDisponivel);
     printf("========================================\n");
 }
 
