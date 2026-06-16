@@ -34,6 +34,73 @@ int main() {
         exibirMenu();
         scanf("%d", &opcao);
 
+        switch (opcao)
+        {
+        case 1:
+            int codigo, ano, quantidade;
+            char titulo[100], autor[100];
+            printf("Insira os dados do livro para cadastro:");
+            printf("\nCodigo: ");
+            scanf("%d", &codigo);
+            getchar(); // consome o '\n' deixado pelo scanf
+            printf("\nTitulo: ");
+            fgets(titulo, 100, stdin);
+            printf("\nAutor: ");
+            fgets(autor, 100, stdin);
+            printf("\nAno de Publicacao: ");
+            scanf("%d", &ano);
+            getchar();
+            printf("\nQuantidade Total de Exemplares: ");
+            scanf("%d", &quantidade);
+            getchar();
+            printf("\n\n");
+
+            Livro *livro = criarLivro(codigo, titulo, autor, ano, quantidade);
+
+            if(!inserirLivroArvore(colecao, livro)) {
+                liberarLivro(livro);
+            } else {
+                printf("Livro cadastrado com sucesso.");
+            }
+            
+            break;
+        case 2:
+
+            break;
+        case 3:
+            
+            break;
+        case 4:
+
+            break;
+        case 5:
+            
+            break;
+        case 6:
+
+            break;
+        case 7:
+            
+            break;
+        case 8:
+
+            break;
+        case 9:
+            
+            break;
+        case 10:
+
+            break;
+        case 11:
+            
+            break;
+        case 0:
+            printf("Saindo do sistema.\n");
+            break;
+        default:
+            break;
+        }
+
     } while (opcao != 0);
 
     return 0;
