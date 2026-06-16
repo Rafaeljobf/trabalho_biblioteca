@@ -82,13 +82,28 @@ int main() {
             
             break;
         case 3:
+                if (contarLivros(colecao) == 0) {
+                    printf("\nNenhum livro cadastrado.\n");
+                } else {
+                    listarLivrosEmOrdem(colecao);
+                }
             
             break;
         case 4:
+                if (contarLivros(colecao) == 0) {
+                    printf("\nNenhum livro cadastrado.\n");
+                } else {
+                    listarLivrosEmPreOrdem(colecao);
+                }
 
             break;
         case 5:
-            
+                if (contarLivros(colecao) == 0) {
+                    printf("\nNenhum livro cadastrado.\n");
+                } else {
+                    listarLivrosEmPosOrdem(colecao);
+                }   
+
             break;
         case 6:
 
