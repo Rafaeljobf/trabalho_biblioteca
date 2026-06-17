@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Aloca uma fila vazia e inicializa o ponteiro inicial.
 Fila* criarFila() {
     Fila* fila = malloc(sizeof(Fila));
     if (fila == NULL) return NULL;
@@ -12,6 +13,7 @@ Fila* criarFila() {
     return fila;
 }
 
+// Retorna 1 se a fila for nula ou não tiver nós; caso contrário, retorna 0.
 int filaVazia(Fila* fila) {
     if (fila == NULL || fila->inicio == NULL) {
         return 1; // vazia
@@ -19,7 +21,7 @@ int filaVazia(Fila* fila) {
     return 0; // não vazia
 }
 
-// função auxiliar de criação de nós
+// Função auxiliar de criação de nós.
 NoFila* criarNoFila() {
     NoFila* novoNo = (NoFila*) malloc(sizeof(NoFila));
     if (novoNo == NULL) {
@@ -29,6 +31,7 @@ NoFila* criarNoFila() {
     return novoNo;
 }
 
+// Função usada para enfileirar os dados.
 void enfileirarReserva(Fila* fila, Reserva reserva) {
     if (fila == NULL) return;
 
@@ -51,6 +54,8 @@ void enfileirarReserva(Fila* fila, Reserva reserva) {
     }
 }
 
+// Remove e retorna o primeiro elemento da fila (política FIFO).
+// Caso a fila esteja vazia, retorna uma reserva com valores padrão.
 Reserva desenfileirarReserva(Fila* fila) {
     Reserva reservaVazia = {"", -1};
 
@@ -61,12 +66,12 @@ Reserva desenfileirarReserva(Fila* fila) {
 
     NoFila* temp = fila->inicio;
     
-    Reserva reservaRecuperada = temp->reserva;
+    Reserva reservaRecuperada = temp->reserva; // salva os dados antes de liberar
 
-    fila->inicio = fila->inicio->prox;
+    fila->inicio = fila->inicio->prox; // avança o início para o próximo nó
 
     if (fila->inicio == NULL) {
-        fila->fim = NULL;
+        fila->fim = NULL; // fila ficou vazia, atualiza o fim também
     }
 
     free(temp);
@@ -74,6 +79,7 @@ Reserva desenfileirarReserva(Fila* fila) {
     return reservaRecuperada;
 }
 
+// Percorre a fila e exibe todas as reservas com sua posição, usuário e código do livro.
 void exibirReservas(Fila* fila) {
     if (fila->inicio == NULL) {
         printf("Nenhuma reserva registrada na fila global.\n");

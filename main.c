@@ -7,6 +7,7 @@
 #include "fila.h"
 #include "lista.h"
 
+// Exibe o menu principal do sistema com todas as opções disponíveis.
 void exibirMenu() {
     printf("\n//==== SISTEMA DE BIBLIOTECA - BIBLIOTECH ====//\n");
     printf("1. Cadastrar Livro\n");
@@ -23,8 +24,9 @@ void exibirMenu() {
     printf("0. Sair\n");
     printf("Escolha uma opcao: ");
 
-    //TODO: adicionar as funcionalidades optativas pra ficar impecável
 }
+
+// Função principal: inicializa as estruturas e gerencia o loop do menu.
 int main() {
     int opcao;
 
