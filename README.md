@@ -18,7 +18,7 @@ O sistema é organizado em 5 grupos principais:
 
 ### 1. Livro (livro.h e livro.c)
 
-É o coração do sistema, nela estão presentes todas as configurações envolvendo livros, desde a definição da struct (livro.h), até a implementação de métodos de busca, remoção e métodos de acesso aos campos da struct. Nele também está presente funções auxiliares da lógica de empréstimo e devolução.
+É o coração do sistema. Nele estão presentes todas as configurações envolvendo livros, desde a definição da struct (livro.h), até a implementação de métodos de busca, remoção e métodos de acesso aos campos da struct. Nele também está presente funções auxiliares da lógica de empréstimo e devolução.
 
 ### 2. Árvore (arvore.h e arvore.c)
 
