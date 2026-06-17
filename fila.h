@@ -22,6 +22,8 @@ void enfileirarReserva(Fila* fila, Reserva reserva);
 
 Reserva desenfileirarReserva(Fila* fila);
 
+Reserva removerReservaPorCodigo(Fila* fila, int codigoLivro);
+
 int filaVazia(Fila* fila);
 
 void exibirReservas(Fila* fila);

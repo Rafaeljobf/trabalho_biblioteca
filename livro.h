@@ -20,7 +20,7 @@ int obterQuantidadeDisponivel(Livro* livro);
 
 void emprestarExemplar(Livro* livro);
 
-void devolverExemplar(Livro* livro);
+int devolverExemplar(Livro* livro);
 
 void liberarLivro(Livro* livro);
 

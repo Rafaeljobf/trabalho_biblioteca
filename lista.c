@@ -44,7 +44,7 @@ void inserirEmprestimo(Lista* lista, Emprestimo emprestimo) {
 // Percorre a lista e imprime todos os empréstimos registrados.
 void listarEmprestimos(Lista* lista) {
     if (listaVazia(lista)) {
-        printf("Nenhum emprestimo registrado no histórico.\n");
+        printf("Nenhum emprestimo registrado no historico.\n");
         return;
     }
 

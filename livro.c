@@ -61,12 +61,12 @@ void emprestarExemplar(Livro* livro) {
     printf("Não foi possível emprestar o exemplar!");
 }
 
-void devolverExemplar(Livro* livro) {
+int devolverExemplar(Livro* livro) {
     if (livro != NULL && livro->quantidadeDisponivel < livro->quantidadeTotal) {
         livro->quantidadeDisponivel++;
-        return;
+        return 1;
     }
-    printf("Não foi possível devolver o exemplar!");
+    return 0;
 }
 
 void liberarLivro(Livro* livro) {
