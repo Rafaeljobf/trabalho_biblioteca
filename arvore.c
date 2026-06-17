@@ -5,8 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// funções auxiliares de listagem em pre ordem, ordem e pos ordem
+// Funções auxiliares de listagem em pre ordem, ordem e pos ordem
 
+// (esquerda -> raiz -> direita)
 static void emOrdemNo(NoArvore* raiz) {
     if (raiz != NULL) {
         emOrdemNo(raiz->esquerda);
@@ -15,6 +16,7 @@ static void emOrdemNo(NoArvore* raiz) {
     }
 }
 
+// (raiz -> esquerda -> direita)
 static void preOrdemNo(NoArvore* raiz) {
     if (raiz != NULL) {
         exibirLivro(raiz->livro);
@@ -23,6 +25,7 @@ static void preOrdemNo(NoArvore* raiz) {
     }
 }
 
+// (esquerda -> direita -> raiz)
 static void posOrdemNo(NoArvore* raiz) {
     if (raiz != NULL) {
         posOrdemNo(raiz->esquerda);
@@ -32,7 +35,10 @@ static void posOrdemNo(NoArvore* raiz) {
 }
 
 
-// função auxiliar de criação de Nó
+// Função auxiliar de criação de Nó
+/* Cria um novo nó da árvore, inicializando ponteiros e altura.
+   Retorna NULL se a alocação falhar. Não associa o Livro aqui;
+   o chamador deve atribuir novoNo->livro após a criação. */
 static NoArvore* criarNoArvore() {
     NoArvore* novoNo = malloc(sizeof(NoArvore));
 
@@ -48,7 +54,7 @@ static NoArvore* criarNoArvore() {
     return novoNo;
 }
 
-// função auxiliar de contagem de livros
+// Função auxiliar de contagem de livros
 static int contarNosRecursivo(NoArvore* no) {
     if (no == NULL) {
         return 0;
@@ -57,7 +63,7 @@ static int contarNosRecursivo(NoArvore* no) {
     return 1 + contarNosRecursivo(no->esquerda) + contarNosRecursivo(no->direita);
 }
 
-// funções auxiliares de balanceamento
+// Funções auxiliares de balanceamento
 
 static int maxInt(int a, int b) {
     return (a > b) ? a : b;
@@ -74,6 +80,8 @@ static int fatorBalanceamento(NoArvore* no) {
 }
 
 static NoArvore* rotacaoDireita(NoArvore* y) {
+    /* Rotação à direita: eleva o filho esquerdo (x) e reencaixa y como
+       filho direito de x. Atualiza alturas de y e x. Preserva ordem in-order. */
     NoArvore* x = y->esquerda;
     NoArvore* T2 = x->direita;
 
@@ -87,6 +95,8 @@ static NoArvore* rotacaoDireita(NoArvore* y) {
 }
 
 static NoArvore* rotacaoEsquerda(NoArvore* x) {
+    /* Rotação à esquerda: eleva o filho direito (y) e reencaixa x como
+       filho esquerdo de y. Atualiza alturas de x e y. Preserva ordem in-order. */
     NoArvore* y = x->direita;
     NoArvore* T2 = y->esquerda;
 
@@ -99,22 +109,35 @@ static NoArvore* rotacaoEsquerda(NoArvore* x) {
     return y;
 }
 
-static NoArvore* inserirNo(NoArvore* no, Livro* livro) {
+static NoArvore* inserirNo(NoArvore* no, Livro* livro, int* inserido) {
+    /* Insere recursivamente um Livro na subárvore apontada por 'no'.
+       Mantém propriedades de árvore AVL: atualiza alturas e aplica rotações
+       quando necessário. Retorna o novo ponteiro raiz da subárvore.
+       Usa 'inserido' para indicar sucesso ou falha sem perder subárvores. */
     if (no == NULL) {
         NoArvore* novoNo = criarNoArvore();
-        if (novoNo == NULL) return NULL;
+        if (novoNo == NULL) {
+            *inserido = 0;
+            return NULL;
+        }
         novoNo->livro = livro;
         novoNo->altura = 0;
+        *inserido = 1;
         return novoNo;
     }
 
     if (livro->codigo < no->livro->codigo) {
-        no->esquerda = inserirNo(no->esquerda, livro);
+        no->esquerda = inserirNo(no->esquerda, livro, inserido);
     } else if (livro->codigo > no->livro->codigo) {
-        no->direita = inserirNo(no->direita, livro);
+        no->direita = inserirNo(no->direita, livro, inserido);
     } else {
         printf("Erro: Livro com código %d já existe.\n", livro->codigo);
-        return NULL;
+        *inserido = 0;
+        return no;
+    }
+
+    if (!*inserido) {
+        return no;
     }
 
     no->altura = maxInt(alturaNo(no->esquerda), alturaNo(no->direita)) + 1;
@@ -144,7 +167,7 @@ static NoArvore* inserirNo(NoArvore* no, Livro* livro) {
 }
 
 
-// funções principais
+// Funções principais
 
 void listarLivrosEmOrdem(Arvore* arvore) {
 
@@ -181,6 +204,8 @@ int calcularAlturaArvore(Arvore* arvore) {
     return arvore->raiz->altura;
 }
 
+/* Aloca e inicializa uma nova estrutura de árvore.
+   Em caso de falha na alocação, termina o programa com erro crítico. */
 Arvore* criarArvore() {
     Arvore* novaArvore = malloc(sizeof(Arvore));
 
@@ -194,22 +219,23 @@ Arvore* criarArvore() {
     return novaArvore;
 }
 
+/* Insere um Livro na árvore pública. Retorna 1 em sucesso, 0 em falha.
+   Possíveis falhas: ponteiros inválidos, duplicata (já existe código) ou
+   falha de memória durante inserção. */
 int inserirLivroArvore(Arvore* arvore, Livro* livro) {
     if (arvore == NULL || livro == NULL) {
         printf("ERRO: Dados inválidos!");
         return 0; // dados inválidos
     }
 
-    NoArvore* novaRaiz = inserirNo(arvore->raiz, livro);
-
-    if (novaRaiz == NULL && arvore->raiz != NULL) {
-        return 0; // duplicata
-    }
-
-    arvore->raiz = novaRaiz;    
-    return 1;
+    int inserido = 0;
+    arvore->raiz = inserirNo(arvore->raiz, livro, &inserido);
+    return inserido;
 }
 
+/* Busca iterativamente um Livro pelo código na árvore.
+   Percorre como em uma busca binária: à esquerda se menor, à direita se maior.
+   Retorna ponteiro para o Livro se encontrado, ou NULL caso contrário. */
 Livro* buscarLivroArvore(Arvore* arvore, int codigo) {
     if (arvore == NULL || arvore->raiz == NULL) {
         printf("ERRO: Árvore inexistente ou vazia.");
@@ -238,7 +264,8 @@ int contarLivros(Arvore* arvore) {
     return contarNosRecursivo(arvore->raiz);
 }
 
-// helper: encontra nó com menor valor (usado na remoção)
+/* Retorna o nó com o menor valor (mais à esquerda) na subárvore.
+   Útil para encontrar o sucessor in-order durante remoção. */
 static NoArvore* menorValor(NoArvore* node) {
     NoArvore* cur = node;
     while (cur && cur->esquerda != NULL)
@@ -246,6 +273,15 @@ static NoArvore* menorValor(NoArvore* node) {
     return cur;
 }
 
+/* Remove recursivamente o nó com 'codigo' na subárvore.
+   Casos:
+   - Nó folha ou com um único filho: libera a memória do Livro (se houver)
+     e do nó, retornando o filho (ou NULL).
+   - Nó com dois filhos: encontra o sucessor in-order (menor da direita),
+     copia os dados do Livro do sucessor para o nó atual e remove o sucessor
+     recursivamente.
+   Após remoção, atualiza alturas e aplica rotações para manter o balanceamento AVL.
+*/
 static NoArvore* removerNo(NoArvore* raiz, int codigo) {
     if (raiz == NULL) return NULL;
 
@@ -257,12 +293,12 @@ static NoArvore* removerNo(NoArvore* raiz, int codigo) {
         // nó encontrado
         if (raiz->esquerda == NULL) {
             NoArvore* temp = raiz->direita;
-            if (raiz->livro != NULL) free(raiz->livro);
+            liberarLivro(raiz->livro);
             free(raiz);
             return temp;
         } else if (raiz->direita == NULL) {
             NoArvore* temp = raiz->esquerda;
-            if (raiz->livro != NULL) free(raiz->livro);
+            liberarLivro(raiz->livro);
             free(raiz);
             return temp;
         } else {
@@ -273,14 +309,8 @@ static NoArvore* removerNo(NoArvore* raiz, int codigo) {
             // salvar o código do sucessor em uma variável segura
             int codigoSucessor = temp->livro->codigo;
 
-            // libera o livro do nó que está sendo removido
-            if (raiz->livro != NULL) free(raiz->livro);
-
-            // nó atual recebe livro do sucessor
-            raiz->livro = temp->livro;
-
-            // desconecta ponteiro do temp antes de remover
-            temp->livro = NULL;
+            // copia os dados do sucessor para o nó atual
+            *(raiz->livro) = *(temp->livro);
 
             // remove o sucessor
             raiz->direita = removerNo(raiz->direita, codigoSucessor);

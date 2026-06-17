@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Aloca uma lista vazia e inicializa o ponteiro inicial.
 Lista* criarLista() {
     Lista* lista = (Lista*) malloc(sizeof(Lista));
     if (lista == NULL) return NULL;
@@ -10,6 +11,7 @@ Lista* criarLista() {
     return lista;
 }
 
+// Retorna 1 se a lista for nula ou não tiver nós; caso contrário, retorna 0.
 int listaVazia(Lista* lista) {
     if (lista == NULL || lista -> inicio == NULL) {
         return 1; // vazia
@@ -17,6 +19,7 @@ int listaVazia(Lista* lista) {
     return 0; // não vazia
 }
 
+// Aloca um novo nó da lista. Os dados do empréstimo são preenchidos pelo chamador.
 NoLista* criarNoLista() {
     NoLista* novoNo = (NoLista*) malloc(sizeof(NoLista));
     if (novoNo == NULL) {
@@ -26,6 +29,7 @@ NoLista* criarNoLista() {
     return novoNo;
 }
 
+// Insere um empréstimo no início da lista de histórico.
 void inserirEmprestimo(Lista* lista, Emprestimo emprestimo) {
     if (lista == NULL) return;
 
@@ -37,6 +41,7 @@ void inserirEmprestimo(Lista* lista, Emprestimo emprestimo) {
     lista -> inicio = novoNo;// insere no início da lista
 }
 
+// Percorre a lista e imprime todos os empréstimos registrados.
 void listarEmprestimos(Lista* lista) {
     if (listaVazia(lista)) {
         printf("Nenhum emprestimo registrado no histórico.\n");
