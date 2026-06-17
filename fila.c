@@ -74,6 +74,42 @@ Reserva desenfileirarReserva(Fila* fila) {
     return reservaRecuperada;
 }
 
+Reserva removerReservaPorCodigo(Fila* fila, int codigoLivro) {
+    Reserva reservaVazia = {"", -1};
+
+    if (fila == NULL || filaVazia(fila)) {
+        return reservaVazia;
+    }
+
+    NoFila* anterior = NULL;
+    NoFila* atual = fila->inicio;
+
+    while (atual != NULL && atual->reserva.codigoLivro != codigoLivro) {
+        anterior = atual;
+        atual = atual->prox;
+    }
+
+    if (atual == NULL) {
+        return reservaVazia;
+    }
+
+    Reserva reservaRecuperada = atual->reserva;
+
+    if (anterior == NULL) {
+        fila->inicio = atual->prox;
+    } else {
+        anterior->prox = atual->prox;
+    }
+
+    if (fila->fim == atual) {
+        fila->fim = anterior;
+    }
+
+    free(atual);
+
+    return reservaRecuperada;
+}
+
 void exibirReservas(Fila* fila) {
     if (fila->inicio == NULL) {
         printf("Nenhuma reserva registrada na fila global.\n");
@@ -84,7 +120,7 @@ void exibirReservas(Fila* fila) {
     printf("\n--- FILA GLOBAL DE RESERVAS ---\n");
     int pos = 1;
     while (atual != NULL) {
-        printf("%d. Usuário: %s | Código do Livro: %d\n",
+        printf("%d. Usuario: %s | Codigo do Livro: %d\n",
                pos++, atual->reserva.nomeUsuario, atual->reserva.codigoLivro);
         atual = atual->prox;
     }

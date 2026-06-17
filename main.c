@@ -124,6 +124,7 @@ int main() {
 
             printf("\nInsira o nome do usuario e o codigo do livro desejado:");
             printf("\nNome do usuario: ");
+            getchar();
             fgets(nomeUsuario, 100, stdin);
             nomeUsuario[strcspn(nomeUsuario, "\n")] = '\0';
             printf("\nCodigo do livro: ");
@@ -183,30 +184,30 @@ int main() {
                 break;
             }
             
-            devolverExemplar(livroDevolver);
-            printf("\nLivro devolvido com sucesso.");
+            int resultadoDevolucao = devolverExemplar(livroDevolver);
+            if (resultadoDevolucao == 1) {
+                printf("Livro devolvido com sucesso!");
+            } else {
+                printf("Não foi possível devolver o exemplar.");
+                break;
+            }
 
             // verifica se há reservas na fila para esse livro
-            NoFila* atual = reservas->inicio;
-            while (atual != NULL) {
-                if (atual->reserva.codigoLivro == codigoDevolver) {
-                    printf("\nHa usuarios aguardando esse livro na fila de reservas.");
-                    printf("\nAtendendo o primeiro da fila: %s\n", atual->reserva.nomeUsuario);
+            Reserva reservaAtendida = removerReservaPorCodigo(reservas, codigoDevolver);
+            if (reservaAtendida.codigoLivro != -1) {
+                printf("\nHa usuarios aguardando esse livro na fila de reservas.");
+                printf("\nAtendendo o primeiro da fila: %s\n", reservaAtendida.nomeUsuario);
 
-                    Emprestimo emp;
-                    emp.codigoLivro = codigoDevolver;
-                    strncpy(emp.nomeUsuario, atual->reserva.nomeUsuario, 99);
-                    emp.nomeUsuario[99] = '\0';
-                    strncpy(emp.tituloLivro, livroDevolver->titulo, 99);
-                    emp.tituloLivro[99] = '\0';
+                Emprestimo emp;
+                emp.codigoLivro = codigoDevolver;
+                strncpy(emp.nomeUsuario, reservaAtendida.nomeUsuario, 99);
+                emp.nomeUsuario[99] = '\0';
+                strncpy(emp.tituloLivro, livroDevolver->titulo, 99);
+                emp.tituloLivro[99] = '\0';
 
-                    desenfileirarReserva(reservas);
-                    emprestarExemplar(livroDevolver);
-                    inserirEmprestimo(historico, emp);
-                    printf("Emprestimo automatico realizado para %s!\n", emp.nomeUsuario);
-                    break;
-                }            
-                atual = atual->prox;
+                emprestarExemplar(livroDevolver);
+                inserirEmprestimo(historico, emp);
+                printf("Emprestimo automatico realizado para %s!\n", emp.nomeUsuario);
             }
         break;
         }
