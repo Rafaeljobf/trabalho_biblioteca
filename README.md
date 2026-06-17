@@ -118,6 +118,5 @@ Todas as funcionalidades obrigatórias do sistema foram implementadas com sucess
 
 ## ⚠️ Limitações Conhecidas
 
-- **Fila global de reservas:** a fila de reservas é única para todos os livros, e cada reserva armazena o código do livro correspondente. No atendimento automático da devolução, o sistema percorre a fila em busca da primeira reserva referente ao livro devolvido. Porém, a remoção da fila sempre retira o elemento do início — ou seja, se houver reservas de livros diferentes antes da reserva do livro devolvido, o usuário removido pode não ser o correto. Para o escopo do trabalho isso é aceitável, mas uma solução mais robusta exigiria uma função de remoção por posição na fila.
 - **Busca apenas por código:** o sistema não permite busca por título ou autor, apenas pelo código do livro.
 - **Sem persistência de dados:** os dados não são salvos em arquivo, então ao encerrar o programa todas as informações são perdidas.
